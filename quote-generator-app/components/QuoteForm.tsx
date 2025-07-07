@@ -32,13 +32,13 @@ export default function QuoteForm() {
       if (!response.ok) throw new Error("Failed to fetch quote from DummyJSON");
       const data = await response.json();
       return [{ text: data.quote, author: data.author, topic: undefined }];
-    } catch (err) {
+    } catch {
       try {
         const response = await fetch("https://zenquotes.io/api/random");
         if (!response.ok) throw new Error("Failed to fetch quote from ZenQuotes");
         const data = await response.json();
         return [{ text: data[0].q, author: data[0].a, topic: undefined }];
-      } catch (error) {
+      } catch {
         setError("Unable to fetch quotes. Please try again later.");
         return [];
       }
