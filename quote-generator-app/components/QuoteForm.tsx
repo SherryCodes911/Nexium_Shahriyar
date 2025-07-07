@@ -32,13 +32,13 @@ export default function QuoteForm() {
       if (!response.ok) throw new Error("Failed to fetch quote from DummyJSON");
       const data = await response.json();
       return [{ text: data.quote, author: data.author, topic: undefined }];
-    } catch (_) {
+    } catch (err) {
       try {
         const response = await fetch("https://zenquotes.io/api/random");
         if (!response.ok) throw new Error("Failed to fetch quote from ZenQuotes");
         const data = await response.json();
         return [{ text: data[0].q, author: data[0].a, topic: undefined }];
-      } catch (_) {
+      } catch (error) {
         setError("Unable to fetch quotes. Please try again later.");
         return [];
       }
@@ -51,15 +51,18 @@ export default function QuoteForm() {
     e.preventDefault();
     setResults([]);
     setError("");
+
     if (!topic.trim()) {
       const randomQuotes = await fetchRandomQuotes();
       setResults(randomQuotes);
       return;
     }
+
     setLoading(true);
     const filtered = (quotes as LocalQuote[]).filter((q) =>
       q.topic.toLowerCase().includes(topic.toLowerCase())
     );
+
     if (filtered.length > 0) {
       setResults(filtered.slice(0, 3));
     } else {
@@ -111,9 +114,10 @@ export default function QuoteForm() {
             <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 size-5 animate-spin text-muted-foreground" />
           )}
         </div>
-        <Button type="submit" disabled={loading} className="w-full">
+        <Button type="submit" disabled={loading} variant="transparent" className="w-full">
           {loading ? "Loading..." : "Get Quotes"}
-        </Button>
+</Button>
+
       </form>
       {error && (
         <p className="mt-4 text-destructive font-medium animate-slide-in">{error}</p>
