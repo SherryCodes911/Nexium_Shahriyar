@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Blog Summariser',
-  description: 'Summarise and translate blogs with AI.',
+  title: 'Blog Summarizer',
+  description: 'Summarize and translate blogs',
 };
 
 export default function RootLayout({
