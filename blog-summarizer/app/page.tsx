@@ -105,7 +105,7 @@ export default function Home() {
               <DialogHeader>
                 <DialogTitle>Blog Summary</DialogTitle>
                 <DialogDescription>
-                  AI-generated summaries in both English and Urdu
+                  Summaries in both English and Urdu
                 </DialogDescription>
               </DialogHeader>
 
