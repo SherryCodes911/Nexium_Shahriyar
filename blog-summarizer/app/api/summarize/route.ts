@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-const translate = require('translate-google');
+import translate from 'translate-google';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -33,14 +33,14 @@ export async function POST(req: Request) {
 
     const summaryUrdu = await translate(summaryEnglish, { to: 'ur' });
 
-    // ✅ Insert into Supabase
+    // Insert into Supabase
     const { error: supabaseError } = await supabase.from('summaries').insert({
       blog_url: url,
       summary_urdu: summaryUrdu,
     });
 
     if (supabaseError) {
-      console.error('❌ Supabase error:', supabaseError);
+      console.error('Supabase error:', supabaseError);
       // Don't stop the app; just log it
     }
 
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       summary_english: summaryEnglish,
     });
   } catch (err) {
-    console.error('❌ Error:', err);
+    console.error('Error:', err);
     return NextResponse.json({ error: 'Failed to summarize' }, { status: 500 });
   }
 }
